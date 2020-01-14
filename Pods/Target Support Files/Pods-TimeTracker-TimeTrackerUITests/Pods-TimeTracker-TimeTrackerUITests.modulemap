@@ -1,0 +1,6 @@
+framework module Pods_TimeTracker_TimeTrackerUITests {
+  umbrella header "Pods-TimeTracker-TimeTrackerUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
