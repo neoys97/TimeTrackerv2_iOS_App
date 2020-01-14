@@ -41,6 +41,7 @@ class EventTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
         guard eventList.events[dFormatter.string(from: viewDate!)] != nil else {return cell}
         let data = eventList.events[dFormatter.string(from: viewDate!)]![indexPath.row]
         cell.eventTitleLabel.text = data.title
+        cell.classTypeLabel.text = data.classType
         if let date = data.startTime {
             cell.startTimeLabel.text = dtFormatter.string(from: date)
         }

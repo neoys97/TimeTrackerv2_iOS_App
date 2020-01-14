@@ -10,7 +10,12 @@ import Foundation
 import RealmSwift
 
 class EventList {
-    var events:[String:Array<Event>] = [:]
+    static let sharedInstance = EventList()
+    
+    var events: [String:Array<Event>] = [:]
+    var toBeDeletedEvents: [Event] = []
+    var toBeAddedEvents: [Event] = []
+    var listOfClass: [String] = []
     let dFormatter = DateFormatter()
     var wakeTime: String
     var sleepTime: String
@@ -20,8 +25,18 @@ class EventList {
         sleepTime = "23:00"
     }
     
-    func addEvent(_ event: Event) {
+    func addToBeAddedEvent () {
+        for event in toBeAddedEvents {
+            addEvent(event)
+        }
+        toBeAddedEvents.removeAll()
+    }
+    
+    func addEvent (_ event: Event) {
         dFormatter.dateFormat="dd-MMM-yyyy"
+        if !listOfClass.contains(event.classType) && event.classType != "" {
+            listOfClass.append(event.classType)
+        }
         if let date = event.startTime {
             let dateString = dFormatter.string(from: date)
             if events[dateString] != nil {
@@ -35,7 +50,14 @@ class EventList {
         }
     }
     
-    func delEvent(_ event: Event) {
+    func delToBeDeletedEvents () {
+        for event in toBeDeletedEvents {
+            delEvent(event)
+        }
+        toBeDeletedEvents.removeAll()
+    }
+    
+    func delEvent (_ event: Event) {
         dFormatter.dateFormat="dd-MMM-yyyy"
         if let date = event.startTime {
             let dateString = dFormatter.string(from: date)
@@ -151,8 +173,10 @@ class EventList {
         let realm = try! Realm()
         let tempEvents = realm.objects(EventModel.self)
         for eventModel in tempEvents {
-            print (eventModel.title)
-            let event = Event(eventModel.title, from: eventModel.startTime, to: eventModel.endTime, eventModel.category)
+            let event = Event(eventModel.title, from: eventModel.startTime, to: eventModel.endTime, eventModel.category, eventModel.classType, due: eventModel.dueDate, hour: eventModel.hourDuration, min: eventModel.minDuration)
+            if !listOfClass.contains(event.classType) && event.classType != "" {
+                       listOfClass.append(event.classType)
+                   }
             if let date = event.startTime {
                 let dateString = dFormatter.string(from: date)
                 if events[dateString] != nil {
@@ -175,7 +199,7 @@ class EventList {
         
         for (_, listOfEvents) in self.events {
             for e in listOfEvents {
-                realm.add(EventModel(e.title, from: e.startTime, to: e.endTime, e.category))
+                realm.add(EventModel(e.title, from: e.startTime, to: e.endTime, e.category, e.classType, due: e.dueDate, hour: e.hourDuration, min: e.minDuration))
             }
         }
         try! realm.commitWrite()

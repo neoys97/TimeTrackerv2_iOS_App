@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		410D92F3170812098D957F60 /* Pods_TimeTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09C173FF87944B7CB61813F /* Pods_TimeTracker.framework */; };
 		7E14FA87EA1613E9DBF88725 /* Pods_TimeTracker_TimeTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037D03415D2A0B416B936F87 /* Pods_TimeTracker_TimeTrackerUITests.framework */; };
+		B5007B0A23CDD3A900C42EEE /* ClassTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5007B0923CDD3A900C42EEE /* ClassTableViewController.swift */; };
+		B5007B0C23CDD5A100C42EEE /* ClassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5007B0B23CDD5A100C42EEE /* ClassTableViewCell.swift */; };
+		B5007B1023CDDD8F00C42EEE /* CustomClassTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5007B0F23CDDD8F00C42EEE /* CustomClassTableViewController.swift */; };
 		B50F719F23C7352700FBB306 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50F719E23C7352700FBB306 /* DateCell.swift */; };
 		B50F71A123C7412F00FBB306 /* DateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50F71A023C7412F00FBB306 /* DateHeader.swift */; };
 		B50F71A323C7679600FBB306 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50F71A223C7679600FBB306 /* Event.swift */; };
@@ -55,6 +58,9 @@
 		8466A23212C847AC43B2E0D6 /* Pods-TimeTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-TimeTrackerTests/Pods-TimeTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9539402A40408CBE86F71E27 /* Pods-TimeTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTracker.debug.xcconfig"; path = "Target Support Files/Pods-TimeTracker/Pods-TimeTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		B4DA0FA903C2E75F3086026D /* Pods-TimeTracker-TimeTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTracker-TimeTrackerUITests.release.xcconfig"; path = "Target Support Files/Pods-TimeTracker-TimeTrackerUITests/Pods-TimeTracker-TimeTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
+		B5007B0923CDD3A900C42EEE /* ClassTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTableViewController.swift; sourceTree = "<group>"; };
+		B5007B0B23CDD5A100C42EEE /* ClassTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTableViewCell.swift; sourceTree = "<group>"; };
+		B5007B0F23CDDD8F00C42EEE /* CustomClassTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomClassTableViewController.swift; sourceTree = "<group>"; };
 		B50F719E23C7352700FBB306 /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		B50F71A023C7412F00FBB306 /* DateHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHeader.swift; sourceTree = "<group>"; };
 		B50F71A223C7679600FBB306 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -132,6 +138,29 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B5007B0D23CDD5B800C42EEE /* AddEvent */ = {
+			isa = PBXGroup;
+			children = (
+				B50F71AE23C844EA00FBB306 /* AddEventViewController.swift */,
+				B5007B0B23CDD5A100C42EEE /* ClassTableViewCell.swift */,
+				B5007B0F23CDDD8F00C42EEE /* CustomClassTableViewController.swift */,
+				B5007B0923CDD3A900C42EEE /* ClassTableViewController.swift */,
+			);
+			path = AddEvent;
+			sourceTree = "<group>";
+		};
+		B5007B0E23CDD79F00C42EEE /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				B50F71A023C7412F00FBB306 /* DateHeader.swift */,
+				B5DC16D323C6E00900DDD38C /* ViewController.swift */,
+				B50F71AC23C80F4600FBB306 /* EventTableView.swift */,
+				B50F719E23C7352700FBB306 /* DateCell.swift */,
+				B50F71A623C7786A00FBB306 /* EventTableViewCell.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
 		B5D857C723CC6B1900C56C23 /* EventClasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,19 +196,15 @@
 		B5DC16CE23C6E00900DDD38C /* TimeTracker */ = {
 			isa = PBXGroup;
 			children = (
+				B5DC16D523C6E00900DDD38C /* Main.storyboard */,
+				B5DC16DD23C6E00A00DDD38C /* LaunchScreen.storyboard */,
+				B5007B0E23CDD79F00C42EEE /* MainView */,
+				B5007B0D23CDD5B800C42EEE /* AddEvent */,
+				B5D857C723CC6B1900C56C23 /* EventClasses */,
+				B5DC16DB23C6E00A00DDD38C /* Assets.xcassets */,
 				B5DC16CF23C6E00900DDD38C /* AppDelegate.swift */,
 				B5DC16D123C6E00900DDD38C /* SceneDelegate.swift */,
-				B5DC16D323C6E00900DDD38C /* ViewController.swift */,
-				B5DC16D523C6E00900DDD38C /* Main.storyboard */,
-				B50F71A023C7412F00FBB306 /* DateHeader.swift */,
-				B5DC16DB23C6E00A00DDD38C /* Assets.xcassets */,
-				B50F71AE23C844EA00FBB306 /* AddEventViewController.swift */,
-				B50F71AC23C80F4600FBB306 /* EventTableView.swift */,
-				B5DC16DD23C6E00A00DDD38C /* LaunchScreen.storyboard */,
 				B5DC16E023C6E00A00DDD38C /* Info.plist */,
-				B50F719E23C7352700FBB306 /* DateCell.swift */,
-				B50F71A623C7786A00FBB306 /* EventTableViewCell.swift */,
-				B5D857C723CC6B1900C56C23 /* EventClasses */,
 				B5DC16D823C6E00900DDD38C /* TimeTracker.xcdatamodeld */,
 			);
 			path = TimeTracker;
@@ -446,6 +471,8 @@
 				B50F71A323C7679600FBB306 /* Event.swift in Sources */,
 				B5DC16D423C6E00900DDD38C /* ViewController.swift in Sources */,
 				B50F719F23C7352700FBB306 /* DateCell.swift in Sources */,
+				B5007B0C23CDD5A100C42EEE /* ClassTableViewCell.swift in Sources */,
+				B5007B1023CDDD8F00C42EEE /* CustomClassTableViewController.swift in Sources */,
 				B50F71A123C7412F00FBB306 /* DateHeader.swift in Sources */,
 				B5DC16D023C6E00900DDD38C /* AppDelegate.swift in Sources */,
 				B5DC16D223C6E00900DDD38C /* SceneDelegate.swift in Sources */,
@@ -453,6 +480,7 @@
 				B50F71AF23C844EA00FBB306 /* AddEventViewController.swift in Sources */,
 				B5DC16DA23C6E00900DDD38C /* TimeTracker.xcdatamodeld in Sources */,
 				B50F71AD23C80F4600FBB306 /* EventTableView.swift in Sources */,
+				B5007B0A23CDD3A900C42EEE /* ClassTableViewController.swift in Sources */,
 				B50F71A723C7786A00FBB306 /* EventTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

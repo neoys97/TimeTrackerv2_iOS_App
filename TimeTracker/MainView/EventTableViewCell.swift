@@ -14,6 +14,7 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var endTimeLabel: UILabel!
     @IBOutlet weak var colorIndicatorView: UIView!
+    @IBOutlet weak var classTypeLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

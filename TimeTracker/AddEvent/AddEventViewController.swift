@@ -16,6 +16,7 @@ class AddEventViewController: UITableViewController {
     @IBOutlet weak var startDateTimePicker: UIDatePicker!
     @IBOutlet weak var endDateTimeLabel: UILabel!
     @IBOutlet weak var endDateTimePicker: UIDatePicker!
+    @IBOutlet weak var classTypeLabel: UILabel!
     @IBOutlet weak var repeatSegmentedControl: UISegmentedControl!
     @IBOutlet weak var repeatTableViewCell: UITableViewCell!
     @IBOutlet weak var timeSuggestionTableViewCell: UITableViewCell!
@@ -29,16 +30,21 @@ class AddEventViewController: UITableViewController {
     var showEndTime = false
     var showSuggestionControl = false
     var editEvent = false
+    var isDueEvent = false
     
     var eventTitle: String?
     var startDateTime: Date?
     var endDateTime: Date?
     var dueDate: Date?
+    var classType: String = ""
+    var hourDuration: Int = 0
+    var minDuration: Int = 0
     var category: Event.Category = .task
     var suggestedTime: [Date?] = [nil, nil]
+    var selectedClassIndex: Int? = nil
 
-    var listOfEvents: [Event] = []
-    var eventList: EventList!
+//    var listOfEvents: [Event] = []
+    var eventList = EventList.sharedInstance
     
     let dFormatter = DateFormatter()
     
@@ -83,7 +89,14 @@ class AddEventViewController: UITableViewController {
     }
     
     @IBAction func suggestionButtonTapped(_ sender: Any) {
+        isDueEvent = true
         dueDate = dueDatePicker.date
+        dFormatter.dateFormat = "HH"
+        let hour = dFormatter.string(from: datePicker.date)
+        hourDuration = Int(hour)!
+        dFormatter.dateFormat = "mm"
+        let min = dFormatter.string(from: datePicker.date)
+        minDuration = Int(min)!
         var today = Date()
         while today <= dueDate! {
             suggestedTime = eventList.suggestTimeSlot(on: today, for: durationPicker.date)
@@ -127,6 +140,10 @@ class AddEventViewController: UITableViewController {
         startDateTimeLabel.text = dFormatter.string(from: startDateTime!)
         endDateTimeLabel.text = dFormatter.string(from: endDateTime!)
         
+        if classType != "" {
+            classTypeLabel.text = classType
+        }
+        
         if let title = eventTitle {
             eventTitleTextField.text = title
         }
@@ -145,30 +162,64 @@ class AddEventViewController: UITableViewController {
             if let title = eventTitleTextField.text {
                 let oneMonthFromNow = Calendar.current.date(byAdding: .day, value: 30, to: endDateTime!)
                 eventTitle = eventTitleTextField.text
+                if let index = selectedClassIndex {
+                    classType = eventList.listOfClass[index]
+                }
                 if repeatSegmentedControl.selectedSegmentIndex == 0 {
-                    listOfEvents.append(Event(title, from: startDateTime, to: endDateTime, category))
+                    if isDueEvent {
+                        eventList.toBeAddedEvents.append(Event(title, from: startDateTime, to: endDateTime, category, classType, due: dueDate, hour: hourDuration, min: minDuration))
+                    }
+                    else {
+                        eventList.toBeAddedEvents.append(Event(title, from: startDateTime, to: endDateTime, category, classType))
+                    }
                 }
                 else if repeatSegmentedControl.selectedSegmentIndex == 1 {
                     while startDateTime! < oneMonthFromNow! {
-                        listOfEvents.append(Event(title, from: startDateTime, to: endDateTime, .routine))
+                        if isDueEvent {
+                            eventList.toBeAddedEvents.append(Event(title, from: startDateTime, to: endDateTime, category, classType, due: dueDate, hour: hourDuration, min: minDuration))
+                        }
+                        else {
+                            eventList.toBeAddedEvents.append(Event(title, from: startDateTime, to: endDateTime, category, classType))
+                        }
                         startDateTime = Calendar.current.date(byAdding: .day, value: 1, to: startDateTime!)
                         endDateTime = Calendar.current.date(byAdding: .day, value: 1, to: endDateTime!)
                     }
                 }
                 else if repeatSegmentedControl.selectedSegmentIndex == 2 {
                     while startDateTime! < oneMonthFromNow! {
-                        listOfEvents.append(Event(title, from: startDateTime, to: endDateTime, .routine))
+                        if isDueEvent {
+                            eventList.toBeAddedEvents.append(Event(title, from: startDateTime, to: endDateTime, category, classType, due: dueDate, hour: hourDuration, min: minDuration))
+                        }
+                        else {
+                            eventList.toBeAddedEvents.append(Event(title, from: startDateTime, to: endDateTime, category, classType))
+                        }
                         startDateTime = Calendar.current.date(byAdding: .day, value: 7, to: startDateTime!)
                         endDateTime = Calendar.current.date(byAdding: .day, value: 7, to: endDateTime!)
                     }
                 }
             }
         }
+        else if segue.identifier == "selectClassSegue" {
+            let destination = segue.destination as! ClassTableViewController
+            destination.listOfClass = eventList.listOfClass
+        }
         else {
             editEvent = false
         }
     }
     
+    @IBAction func returned(segue:UIStoryboardSegue) {
+        let source = segue.source as! ClassTableViewController
+        eventList.listOfClass = source.listOfClass
+        print (eventList.listOfClass.count)
+        if segue.identifier == "doneSelectClass" {
+            selectedClassIndex = source.selectedClassIndex
+            if let index = selectedClassIndex {
+                classTypeLabel.text = eventList.listOfClass[index]
+            }
+        }
+        self.tableView.reloadData()
+    }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         dFormatter.dateFormat = "dd-MMM-yyyy HH:mm"
@@ -223,7 +274,7 @@ class AddEventViewController: UITableViewController {
                 return (showEndTime ? tableView.rowHeight : 0.0)
             }
         }
-        else if (indexPath.section == 2) {
+        else if (indexPath.section == 3) {
             if indexPath.row != 0 {
                 return (showSuggestionControl ? tableView.rowHeight : 0.0)
             }

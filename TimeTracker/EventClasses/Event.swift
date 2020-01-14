@@ -7,25 +7,41 @@
 //
 
 import Foundation
-import RealmSwift
 
-class Event: Object {
-    @objc dynamic var title: String = ""
-    @objc dynamic var startTime: Date? = nil
-    @objc dynamic var endTime: Date? = nil
-    @objc dynamic var clash = false
+class Event {
+    var title: String = ""
+    var startTime: Date? = nil
+    var endTime: Date? = nil
+    var clash = false
+    var dueDate: Date? = nil
+    var hourDuration: Int = 0
+    var minDuration: Int = 0
     enum Category {
         case routine
         case task
     }
     var category: Category = .task
+    var classType: String = ""
     
-    convenience init(_ title: String, from startTime: Date?, to endTime: Date?, _ cat: Category) {
+    convenience init(_ title: String, from startTime: Date?, to endTime: Date?, _ cat: Category, _ classType: String) {
         self.init()
         self.title = title
         self.startTime = startTime
         self.endTime = endTime
+        self.classType = classType
         self.category = cat
+    }
+    
+    convenience init(_ title: String, from startTime: Date?, to endTime: Date?, _ cat: Category, _ classType: String, due dueDate: Date?, hour hourDuration: Int, min minDuration: Int) {
+        self.init()
+        self.title = title
+        self.startTime = startTime
+        self.endTime = endTime
+        self.classType = classType
+        self.category = cat
+        self.dueDate = dueDate
+        self.hourDuration = hourDuration
+        self.minDuration = minDuration
     }
 }
 

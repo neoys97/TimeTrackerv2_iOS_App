@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     var dFormatter = DateFormatter()
     let dateFormat = "dd-MMM-yyyy"
     let dateTimeFormat = "dd-MMM-yyyy HH:mm"
-    var eventList = EventList()
+    var eventList = EventList.sharedInstance
     
     
     override func viewDidLoad() {
@@ -116,6 +116,7 @@ class ViewController: UIViewController {
                 target.endDateTime = events[index].endTime
                 target.eventTitle = events[index].title
                 target.category = events[index].category
+                target.classType = events[index].classType
                 target.editEvent = true
             }
         }
@@ -126,21 +127,16 @@ class ViewController: UIViewController {
         let source = segue.source as! AddEventViewController
         if source.editEvent {
             eventList.delEvent(eventList.events[dFormatter.string(from: viewDate)]![currentEventLoc!])
-            addEvent(source.listOfEvents)
+            eventList.addToBeAddedEvent()
         }
         else {
-            if source.listOfEvents.count != 0 {
-                addEvent(source.listOfEvents)
+            if eventList.toBeAddedEvents.count != 0 {
+                eventList.addToBeAddedEvent()
             }
-        }
-    }
-    
-    func addEvent(_ events: [Event]) {
-        for e in events {
-            eventList.addEvent(e)
         }
         reloadView()
     }
+    
     
     func deleteEvent(date: Date?, index: Int) {
         dFormatter.dateFormat = dateFormat
