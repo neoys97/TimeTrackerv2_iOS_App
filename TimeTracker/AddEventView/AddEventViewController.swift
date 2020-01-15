@@ -92,27 +92,47 @@ class AddEventViewController: UITableViewController {
         isDueEvent = true
         dueDate = dueDatePicker.date
         dFormatter.dateFormat = "HH"
-        let hour = dFormatter.string(from: datePicker.date)
+        let hour = dFormatter.string(from: durationPicker.date)
         hourDuration = Int(hour)!
         dFormatter.dateFormat = "mm"
-        let min = dFormatter.string(from: datePicker.date)
+        let min = dFormatter.string(from: durationPicker.date)
         minDuration = Int(min)!
-        var today = Date()
-        while today <= dueDate! {
-            suggestedTime = eventList.suggestTimeSlot(on: today, for: durationPicker.date)
-            if let suggestStart = suggestedTime[0], let suggestEnd = suggestedTime[1] {
-                datePicker.setDate(suggestStart, animated: false)
-                changeDateLabel(dateLabel, datePicker as Any, "dd-MMM-yyyy")
-                startDateTimePicker.setDate(suggestStart, animated: false)
-                changeDateLabel(startDateTimeLabel, startDateTimePicker as Any, "HH:mm")
-                endDateTimePicker.setDate(suggestEnd, animated: false)
-                changeDateLabel(endDateTimeLabel, endDateTimePicker as Any, "HH:mm")
-                let alert = UIAlertController(title: "Found", message: "Found suggested time for the task!", preferredStyle: .alert)
+//        var today = Date()
+//        while today <= dueDate! {
+//            suggestedTime = eventList.suggestTimeSlot(on: today, for: durationPicker.date)
+//            if let suggestStart = suggestedTime[0], let suggestEnd = suggestedTime[1] {
+//                datePicker.setDate(suggestStart, animated: false)
+//                changeDateLabel(dateLabel, datePicker as Any, "dd-MMM-yyyy")
+//                startDateTimePicker.setDate(suggestStart, animated: false)
+//                changeDateLabel(startDateTimeLabel, startDateTimePicker as Any, "HH:mm")
+//                endDateTimePicker.setDate(suggestEnd, animated: false)
+//                changeDateLabel(endDateTimeLabel, endDateTimePicker as Any, "HH:mm")
+//                let alert = UIAlertController(title: "Found", message: "Found suggested time for the task!", preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "OK", style: .default))
+//                self.present(alert, animated: true)
+//                return
+//            }
+//            today = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+//        }
+        suggestedTime = eventList.triggerSuggestion(due: dueDate, for: durationPicker.date)
+        if let suggestStart = suggestedTime[0], let suggestEnd = suggestedTime[1] {
+            datePicker.setDate(suggestStart, animated: false)
+            changeDateLabel(dateLabel, datePicker as Any, "dd-MMM-yyyy")
+            startDateTimePicker.setDate(suggestStart, animated: false)
+            changeDateLabel(startDateTimeLabel, startDateTimePicker as Any, "HH:mm")
+            endDateTimePicker.setDate(suggestEnd, animated: false)
+            changeDateLabel(endDateTimeLabel, endDateTimePicker as Any, "HH:mm")
+//            eventList.debug()
+            if eventList.toBeAddedEvents.count != 0 {
+                let alert = UIAlertController(title: "Found", message: "Found suggested time for the task with some tasks rescheduled!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true)
                 return
             }
-            today = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+            let alert = UIAlertController(title: "Found", message: "Found suggested time for the task!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
+            return
         }
         let alert = UIAlertController(title: "Not Found", message: "Could not find a time slot for the task", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -211,7 +231,6 @@ class AddEventViewController: UITableViewController {
     @IBAction func returned(segue:UIStoryboardSegue) {
         let source = segue.source as! ClassTableViewController
         eventList.listOfClass = source.listOfClass
-        print (eventList.listOfClass.count)
         if segue.identifier == "doneSelectClass" {
             selectedClassIndex = source.selectedClassIndex
             if let index = selectedClassIndex {

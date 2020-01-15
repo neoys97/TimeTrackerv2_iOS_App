@@ -52,7 +52,12 @@ class EventTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
             case .routine:
                 cell.colorIndicatorView.backgroundColor = .systemIndigo
             case .task:
-                cell.colorIndicatorView.backgroundColor = .systemGreen
+                if let index = eventList.listOfClass.firstIndex(of: data.classType) {
+                    cell.colorIndicatorView.backgroundColor = eventList.classColors[index % eventList.classColors.count]
+                }
+                else {
+                    cell.colorIndicatorView.backgroundColor = .systemGreen
+                }
         }
         if data.clash {
             cell.colorIndicatorView.backgroundColor = .systemRed

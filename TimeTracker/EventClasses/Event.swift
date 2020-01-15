@@ -62,3 +62,10 @@ extension Event: Comparable {
         }
     }
 }
+
+extension Event: NSCopying {
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = Event(title, from: startTime, to: endTime, category, classType, due: dueDate, hour: hourDuration, min: minDuration)
+        return copy
+    }
+}

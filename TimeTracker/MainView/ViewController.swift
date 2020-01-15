@@ -129,11 +129,18 @@ class ViewController: UIViewController {
             eventList.delEvent(eventList.events[dFormatter.string(from: viewDate)]![currentEventLoc!])
             eventList.addToBeAddedEvent()
         }
-        else {
+        else if segue.identifier == "doneAddEventSegue"{
+            eventList.debug()
             if eventList.toBeAddedEvents.count != 0 {
                 eventList.addToBeAddedEvent()
             }
+            if eventList.toBeDeletedEvents.count != 0 {
+                eventList.delToBeDeletedEvents()
+            }
         }
+        eventList.toBeAddedEvents.removeAll()
+        eventList.toBeDeletedEvents.removeAll()
+        eventList.copyOfEvents.removeAll()
         reloadView()
     }
     
@@ -148,6 +155,14 @@ class ViewController: UIViewController {
     
     func loadData() {
         eventList.loadData()
+        var load = true
+        for (_, _) in eventList.events {
+            load = false
+            break
+        }
+        if load {
+            eventList.devLoadData()
+        }
     }
     
     func reloadView() {
