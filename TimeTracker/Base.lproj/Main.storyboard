@@ -818,7 +818,7 @@
                     <navigationItem key="navigationItem" title="Class" id="gwj-z3-1ZI">
                         <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="QB5-S1-T4v">
                             <connections>
-                                <segue destination="dYn-0x-I2l" kind="unwind" unwindAction="returnedWithSegue:" id="5nP-dA-kJE"/>
+                                <segue destination="dYn-0x-I2l" kind="unwind" identifier="cancelSelectClass" unwindAction="returnedWithSegue:" id="5nP-dA-kJE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -927,6 +927,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="NAS-W3-htW" customClass="TabBarViewController" customModule="TimeTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JiN-Tl-A1v">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -937,7 +938,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jb5-av-VGy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-245" y="481"/>
+            <point key="canvasLocation" x="187" y="453"/>
         </scene>
         <!--Homework-->
         <scene sceneID="5E4-sb-YCb">

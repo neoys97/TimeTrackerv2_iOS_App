@@ -31,6 +31,9 @@ class ClassTableViewController: UITableViewController {
                 selectedClassIndex = index
             }
         }
+        else if segue.identifier == "cancelSelectClass" {
+            selectedClassIndex = nil
+        }
     }
     
     @IBAction func returned(segue:UIStoryboardSegue) {

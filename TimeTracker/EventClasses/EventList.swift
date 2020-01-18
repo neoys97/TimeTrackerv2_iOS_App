@@ -268,9 +268,7 @@ class EventList {
         }
         
         let end = dFormatter.date(from: dateString + " " + sleepTime)
-//        dFormatter.dateFormat = "HH"
         let hour = hourDuration
-//        dFormatter.dateFormat = "mm"
         let min = minuteDuration
         
         var suggestedTime: [Date?] = [start, end]
@@ -366,14 +364,16 @@ class EventList {
         addEvent(Event("Photosynthesis", from: dFormatter.date(from: "15-Jan-2020 15:30"), to: dFormatter.date(from: "15-Jan-2020 17:30"), .task, "Biology", due: dFormatter.date(from: "24-Jan-2020 00:00"), hour: 2, min: 0))
         addEvent(Event("Hydrogen", from: dFormatter.date(from: "15-Jan-2020 21:00"), to: dFormatter.date(from: "15-Jan-2020 22:00"), .task, "Chemistry", due: dFormatter.date(from: "22-Jan-2020 00:00"), hour: 1, min: 0))
         addEvent(Event("Momentum", from: dFormatter.date(from: "16-Jan-2020 16:00"), to: dFormatter.date(from: "16-Jan-2020 17:30"), .task, "Physics", due: dFormatter.date(from: "26-Jan-2020 00:00"), hour: 1, min: 30))
-        addEvent(Event("Calculus", from: dFormatter.date(from: "16-Jan-2020 21:00"), to: dFormatter.date(from: "16-Jan-2020 22:00"), .task, "Mathematics", due: dFormatter.date(from: "28-Jan-2020 00:00"), hour: 1, min: 0))
-        
+        addEvent(Event("Calculus", from: dFormatter.date(from: "16-Jan-2020 21:00"), to: dFormatter.date(from: "16-Jan-2020 21:30"), .task, "Mathematics", due: dFormatter.date(from: "28-Jan-2020 00:00"), hour: 1, min: 0))
+
         addEvent(Event("Routine 1", from: dFormatter.date(from: "15-Jan-2020 07:30"), to: dFormatter.date(from: "15-Jan-2020 15:30"), .routine, ""))
         addEvent(Event("Routine 2", from: dFormatter.date(from: "15-Jan-2020 17:30"), to: dFormatter.date(from: "15-Jan-2020 20:30"), .routine, ""))
         addEvent(Event("Routine 3", from: dFormatter.date(from: "15-Jan-2020 22:30"), to: dFormatter.date(from: "15-Jan-2020 23:00"), .routine, ""))
+        addEvent(Event("Routine 4a", from: dFormatter.date(from: "16-Jan-2020 07:00"), to: dFormatter.date(from: "16-Jan-2020 07:30"), .routine, ""))
         addEvent(Event("Routine 4", from: dFormatter.date(from: "16-Jan-2020 07:30"), to: dFormatter.date(from: "16-Jan-2020 15:30"), .routine, ""))
         addEvent(Event("Routine 5", from: dFormatter.date(from: "16-Jan-2020 17:30"), to: dFormatter.date(from: "16-Jan-2020 20:00"), .routine, ""))
-        addEvent(Event("Routine 6", from: dFormatter.date(from: "16-Jan-2020 22:30"), to: dFormatter.date(from: "16-Jan-2020 23:00"), .routine, ""))
+        addEvent(Event("Routine 6", from: dFormatter.date(from: "16-Jan-2020 21:30"), to: dFormatter.date(from: "16-Jan-2020 22:30"), .routine, ""))
+        addEvent(Event("Routine 6a", from: dFormatter.date(from: "16-Jan-2020 22:30"), to: dFormatter.date(from: "16-Jan-2020 23:00"), .routine, ""))
     }
     
     func debug() {

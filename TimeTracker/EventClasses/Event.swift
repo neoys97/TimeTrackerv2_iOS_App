@@ -19,6 +19,7 @@ class Event {
     enum Category {
         case routine
         case task
+        case normal
     }
     var category: Category = .task
     var classType: String = ""

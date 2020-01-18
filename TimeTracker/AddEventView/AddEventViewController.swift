@@ -97,23 +97,6 @@ class AddEventViewController: UITableViewController {
         dFormatter.dateFormat = "mm"
         let min = dFormatter.string(from: durationPicker.date)
         minDuration = Int(min)!
-//        var today = Date()
-//        while today <= dueDate! {
-//            suggestedTime = eventList.suggestTimeSlot(on: today, for: durationPicker.date)
-//            if let suggestStart = suggestedTime[0], let suggestEnd = suggestedTime[1] {
-//                datePicker.setDate(suggestStart, animated: false)
-//                changeDateLabel(dateLabel, datePicker as Any, "dd-MMM-yyyy")
-//                startDateTimePicker.setDate(suggestStart, animated: false)
-//                changeDateLabel(startDateTimeLabel, startDateTimePicker as Any, "HH:mm")
-//                endDateTimePicker.setDate(suggestEnd, animated: false)
-//                changeDateLabel(endDateTimeLabel, endDateTimePicker as Any, "HH:mm")
-//                let alert = UIAlertController(title: "Found", message: "Found suggested time for the task!", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "OK", style: .default))
-//                self.present(alert, animated: true)
-//                return
-//            }
-//            today = Calendar.current.date(byAdding: .day, value: 1, to: today)!
-//        }
         suggestedTime = eventList.triggerSuggestion(due: dueDate, for: durationPicker.date)
         if let suggestStart = suggestedTime[0], let suggestEnd = suggestedTime[1] {
             datePicker.setDate(suggestStart, animated: false)
@@ -185,7 +168,16 @@ class AddEventViewController: UITableViewController {
                 if let index = selectedClassIndex {
                     classType = eventList.listOfClass[index]
                 }
+                else {
+                    classType = ""
+                }
                 if repeatSegmentedControl.selectedSegmentIndex == 0 {
+                    if classType == "" {
+                        category = .normal
+                    }
+                    else {
+                        category = .task
+                    }
                     if isDueEvent {
                         eventList.toBeAddedEvents.append(Event(title, from: startDateTime, to: endDateTime, category, classType, due: dueDate, hour: hourDuration, min: minDuration))
                     }
@@ -194,6 +186,7 @@ class AddEventViewController: UITableViewController {
                     }
                 }
                 else if repeatSegmentedControl.selectedSegmentIndex == 1 {
+                    category = .routine
                     while startDateTime! < oneMonthFromNow! {
                         if isDueEvent {
                             eventList.toBeAddedEvents.append(Event(title, from: startDateTime, to: endDateTime, category, classType, due: dueDate, hour: hourDuration, min: minDuration))
@@ -206,6 +199,7 @@ class AddEventViewController: UITableViewController {
                     }
                 }
                 else if repeatSegmentedControl.selectedSegmentIndex == 2 {
+                    category = .routine
                     while startDateTime! < oneMonthFromNow! {
                         if isDueEvent {
                             eventList.toBeAddedEvents.append(Event(title, from: startDateTime, to: endDateTime, category, classType, due: dueDate, hour: hourDuration, min: minDuration))
@@ -231,12 +225,15 @@ class AddEventViewController: UITableViewController {
     @IBAction func returned(segue:UIStoryboardSegue) {
         let source = segue.source as! ClassTableViewController
         eventList.listOfClass = source.listOfClass
-        if segue.identifier == "doneSelectClass" {
-            selectedClassIndex = source.selectedClassIndex
-            if let index = selectedClassIndex {
-                classTypeLabel.text = eventList.listOfClass[index]
-            }
+        
+        selectedClassIndex = source.selectedClassIndex
+        if let index = selectedClassIndex {
+            classTypeLabel.text = eventList.listOfClass[index]
         }
+        else {
+            classTypeLabel.text = "None"
+        }
+    
         self.tableView.reloadData()
     }
     

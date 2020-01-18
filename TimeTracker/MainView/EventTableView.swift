@@ -31,7 +31,10 @@ class EventTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        guard eventList.events[dFormatter.string(from: viewDate!)] != nil else {return 0}
+        dFormatter.dateFormat = "dd-MMM-yyyy"
+        if eventList.events[dFormatter.string(from: viewDate!)] == nil || eventList.events[dFormatter.string(from: viewDate!)]!.count == 0 {
+            return 0
+        }
         return eventList.events[dFormatter.string(from: viewDate!)]!.count
     }
 
@@ -58,6 +61,8 @@ class EventTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
                 else {
                     cell.colorIndicatorView.backgroundColor = .systemGreen
                 }
+            case .normal:
+                cell.colorIndicatorView.backgroundColor = .systemGreen
         }
         if data.clash {
             cell.colorIndicatorView.backgroundColor = .systemRed
@@ -83,5 +88,13 @@ class EventTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
         if let pvc = self.parentViewController {
             pvc.reloadView()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 88.0
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 88.0
     }
 }

@@ -22,8 +22,11 @@ class EventModel: Object {
             if categoryIndex == 0 {
                 return (.routine)
             }
-            else {
+            else if categoryIndex == 1{
                 return (.task)
+            }
+            else {
+                return (.normal)
             }
         }
         set {
@@ -32,6 +35,9 @@ class EventModel: Object {
             }
             else if newValue == .task {
                 categoryIndex = 1
+            }
+            else if newValue == .normal {
+                categoryIndex = 2
             }
         }
     }

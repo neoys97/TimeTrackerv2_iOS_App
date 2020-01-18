@@ -226,7 +226,7 @@ class ViewController: UIViewController {
         if let events = eventList.events[dateString]{
             for e in events {
                 if e.category == .routine {hasRoutine = true}
-                if e.category == .task {hasTask = true}
+                if e.category == .task || e.category == .normal {hasTask = true}
             }
         }
         cell.routineDotView.layer.cornerRadius = 5
