@@ -6,7 +6,7 @@ An app that can track user's schedule
 * Add, remove and modify routines or events
 * Propose reshedule options
 
-## Screenshot
+## Screenshots
 ![Screenshot](Screenshots/ss1.png)
 ![Screenshot](Screenshots/ss2.png)
 ![Screenshot](Screenshots/ss3.png)
